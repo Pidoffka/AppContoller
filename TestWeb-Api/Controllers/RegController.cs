@@ -28,23 +28,25 @@ namespace TestWeb_Api.Controllers
         {
             using (var context = new AppContext())
             {
-                return context.Users.Any(x => x.PhoneNumber == phoneNumber);
+                return context.Users.Any(x => x.Phone_Number == phoneNumber);
             }
         }
         [HttpPost("add_user")]
-        public string AddUser([FromBody] AuthModel authModel)
+        public string AddUser([FromBody] User authModel)
         {
-            if (CheckUser(authModel.PhoneNumber))
+            if (CheckUser(authModel.Phone_Number))
             {
                 return "false";
             }
             User user = new User()
             {
                 Name = authModel.Name,
-                PhoneNumber = authModel.PhoneNumber,
+                Surname = authModel.Surname,
+                Date_of_Birthday = authModel.Date_of_Birthday,
+                Gender = authModel.Gender,
+                Phone_Number = authModel.Phone_Number,
                 Password = authModel.Password,
-                FamilyId = null,
-                JsonToken = AddJwt(authModel.PhoneNumber)
+                JsonToken = AddJwt(authModel.Phone_Number)
             };
             using (var context = new AppContext())
             {
@@ -55,11 +57,11 @@ namespace TestWeb_Api.Controllers
         }
 
         [HttpPost("check_signin")]
-        public string Check_Login([FromBody] AuthModel authModel)
+        public string Check_Login([FromBody] User authModel)
         {
             using (var context = new AppContext())
             {
-                var user = context.Users.Where(x => x.PhoneNumber == authModel.PhoneNumber & x.Password == authModel.Password).ToList();
+                var user = context.Users.Where(x => x.Phone_Number == authModel.Phone_Number & x.Password == authModel.Password).ToList();
                 if(user.Count() == 0)
                 {
                     return "false";

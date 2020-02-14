@@ -21,8 +21,8 @@ namespace TestWeb_Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            using var appContext = new AppContext();
-            appContext.Database.Migrate();
+            //using var appContext = new AppContext();
+            //appContext.Database.Migrate();
         }
 
         public IConfiguration Configuration { get; }
