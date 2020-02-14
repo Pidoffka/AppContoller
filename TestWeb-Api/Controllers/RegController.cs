@@ -32,7 +32,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("add_user")]
-        public string AddUser([FromBody] User authModel)
+        public string AddUser([FromBody] AuthModel authModel)
         {
             if (CheckUser(authModel.Phone_Number))
             {
