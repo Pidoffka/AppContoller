@@ -18,6 +18,7 @@ namespace TestWeb_Api
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Event_Institution> Event_Institutions { get; set; }
-        
+        public DbSet<Category> Categories { get; set; }
+
     } 
 }
