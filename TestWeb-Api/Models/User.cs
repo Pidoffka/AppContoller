@@ -11,17 +11,17 @@ namespace TestWeb_Api.Models
         
         [Key]
         [Required]
-        public int UserId { get; set; }
+        public int Id_USer { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
         [Required]
-        public DateTime Date_Of_Birthday { get; set; }
+        public DateTime Date_of_Birthday { get; set; }
         [Required]
         public string Gender { get; set; }
         [Required]
-        public string PhoneNumber { get; set; }
+        public string Phone_Number { get; set; }
         
         [Required]
         public string Password { get; set; }

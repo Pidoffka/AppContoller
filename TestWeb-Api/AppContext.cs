@@ -17,6 +17,7 @@ namespace TestWeb_Api
             optionsBuilder.UseSqlServer(@"Server=wpl24.hosting.reg.ru;Database=u0933163_dan1a;User ID=u0933163_dan1a;Password=EfWe4QD7djDuRqh"); // connection string to your DB
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Event_Institution> Event_Institutions { get; set; }
         
     } 
 }
