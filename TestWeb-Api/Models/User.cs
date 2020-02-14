@@ -8,7 +8,7 @@ namespace TestWeb_Api.Models
 {
     public class User
     {
-        //PIDARAS VOLODYA
+        
         [Key]
         [Required]
         public int UserId { get; set; }
