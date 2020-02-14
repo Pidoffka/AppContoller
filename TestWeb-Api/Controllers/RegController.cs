@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace TestWeb_Api.Controllers
             {
                 Name = authModel.Name,
                 Surname = authModel.Surname,
-                Date_of_Birthday = authModel.Date_of_Birthday,
+                Date_of_Birthday = DateTime.ParseExact(authModel.Date_of_Birthday, "yyyy.MM.dd", CultureInfo.InvariantCulture),
                 Gender = authModel.Gender,
                 Phone_Number = authModel.Phone_Number,
                 Password = authModel.Password,
