@@ -25,7 +25,7 @@ namespace TestWeb_Api.Models
         
         [Required]
         public string Password { get; set; }
-        
+  
         public string JsonToken { get; set; }
         
     }
