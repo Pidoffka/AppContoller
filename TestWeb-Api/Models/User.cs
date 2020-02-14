@@ -17,7 +17,7 @@ namespace TestWeb_Api.Models
         [Required]
         public string Surname { get; set; }
         [Required]
-        public DateTime Date_of_Birthday { get; set; }
+        public DateTime? Date_of_Birthday { get; set; }
         [Required]
         public string Gender { get; set; }
         [Required]
@@ -25,7 +25,7 @@ namespace TestWeb_Api.Models
         
         [Required]
         public string Password { get; set; }
-        
+  
         public string JsonToken { get; set; }
         
     }
