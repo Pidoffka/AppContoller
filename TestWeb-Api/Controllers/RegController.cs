@@ -58,7 +58,7 @@ namespace TestWeb_Api.Controllers
         }
 
         [HttpPost("check_signin")]
-        public string Check_Login([FromBody] User authModel)
+        public string Check_Login([FromBody] CheckModel authModel)
         {
             using (var context = new AppContext())
             {

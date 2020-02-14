@@ -11,7 +11,7 @@ namespace TestWeb_Api.Models
         
         [Key]
         [Required]
-        public int Id_USer { get; set; }
+        public int Id_User { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
