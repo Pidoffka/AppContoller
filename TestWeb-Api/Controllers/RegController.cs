@@ -24,7 +24,7 @@ namespace TestWeb_Api.Controllers
         {
             return View("MainPage");
         }
-        [HttpPost("check_user")]
+        
         public bool CheckUser([FromBody]string phoneNumber)
         {
             using (var context = new AppContext())

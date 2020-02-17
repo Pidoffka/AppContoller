@@ -19,6 +19,15 @@ namespace TestWeb_Api
         public DbSet<User> Users { get; set; }
         public DbSet<Event_Institution> Event_Institutions { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Team_to_Event> Teams_to_Events { get; set; }
+        public DbSet<Connection_Event_Category> Connections_Event_Categories { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Connection_Event_Category>().HasKey(u => new { u.Id_Event, u.Id_Categories });
+        }
+        public DbSet<Criterions_Gender> Criterions_Genders { get; set; }
+        public DbSet<Criterions_Age> Criterions_Ages { get; set; }
+
 
     } 
 }
