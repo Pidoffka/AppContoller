@@ -27,80 +27,41 @@ namespace TestWeb_Api.Controllers
         {
             return View();
         }
-        public bool CheckUser1(int id_User)
+        
+        [HttpPost("add_friend")]
+        public void Add_friend([FromBody]List<User> users)
         {
             using(var context = new AppContext())
             {
-                return context.Users.Any(x => x.Id_User == id_User);
-            }
-        }
-        [HttpPost("add_friend")]
-        public bool Add_friend(List<User> users)
-        {
-            foreach (User x in users)
-            {
-                if (!CheckUser1(x.Id_User))
+                var User_Sender = context.Users.First(x => x.Phone_Number == users[0].Phone_Number);
+                var User_Receiver = context.Users.First(x => x.Phone_Number == users[1].Phone_Number);
+                Friend friend = new Friend
                 {
-                    return false;
-                }
-            }
-            Follower follower = new Follower()
-            {
-                Id_User_Sender = users[0].Id_User,
-                Id_User_Receiver = users[1].Id_User,
-                Checked = false,
-                Viewed = true,
-                Answer = false
-                
-            };
-            using (var context = new AppContext())
-            {
-                context.Followers.Add(follower);
+                    Id_User_Sender = User_Sender.Id_User,
+                    Id_User_Receiver = User_Receiver.Id_User,
+                    Phone_Number_Sender = User_Sender.Phone_Number,
+                    Phone_Number_Receiver = User_Receiver.Phone_Number,
+                    Answer = false,
+                    Checked = false
+                };
+                context.Friends.Add(friend);
                 context.SaveChanges();
             }
-            return true;
+            
         }
         [HttpPost("Checked_friend")]
-        public bool Check_friend(List<User> users, bool Yes_Not)
+        public void Check_friend([FromBody] Friend_test friends)
         {
             using (var context = new AppContext())
             {
-                var followers = context.Followers.Where(y => y.Id_User_Sender == users[0].Id_User & y.Id_User_Receiver == users[1].Id_User & y.Checked == false).ToList();
-                if (followers.Count == 0)
-                {
-                    return false;
-                }
-                foreach (Follower x in followers)
-                {
-                    if (x.Checked == false)
-                    {
-                        
-                        x.Checked = true;
-                        context.Followers.Update(x);
-                        context.SaveChanges();
-                        if (Yes_Not)
-                        {
-                            
-                            Friend friend = new Friend()
-                            {
-                                Id_User_Sender = x.Id_User_Sender,
-                                Id_User_Receiver = x.Id_User_Receiver,
-                                Checked = true,
-                                Viewed = true,
-                                Answer = true
-                            };
-                            x.Answer = true;
-                            context.Followers.Update(x);
-                            context.Friends.Add(friend);
-                            context.SaveChanges();
-                            return true;
-                        }
-                        
-                    }
-                }
-
+                var friend = context.Friends.First(x => x.Phone_Number_Sender == friends.phone_number_sender & x.Phone_Number_Receiver == friends.phone_number_receiver & x.Checked == false);
+                friend.Answer = friends.yes_not;
+                friend.Checked = true;
+                context.Friends.Update(friend);
+                context.SaveChanges();
             }
-            return false;
+                
+            
         }
     }
 }

@@ -5,22 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace TestWeb_Api.Models
 {
-    public class Friend: Follower
+    public class Friend
     {
-        
+        [Key]
         [Required]
         public int Id_User_Sender { get; set; }
-        
+        [Required]
+        public string? Phone_Number_Sender { get; set; }
+        [Key]
         [Required]
         public int Id_User_Receiver { get; set; }
         [Required]
-        public bool Checked { get; set; }
-        [Required]
-        public bool Viewed { get; set; }
+        public string Phone_Number_Receiver { get; set; }
         [Required]
         public bool Answer { get; set; }
+        public bool Checked { get; set; }
 
-        public virtual User Users1 { get; set; }
-        public virtual User Users2 { get; set; }
+        //public virtual ICollection<User> Users { get; set; }
+        
     }
 }

@@ -20,7 +20,7 @@ namespace TestWeb_Api.Models
         [Required]
         public byte Open_Closed {get; set;}
         public string Password { get; set; }
-        public virtual User Users { get; set; }
+        //public virtual User Users { get; set; }
         public virtual Event_Institution Event_Institutions { get; set; }
         public virtual ICollection<Criterions_Gender> Criterions_Genders { get; set; }
         public virtual ICollection<Criterions_Age> Criterions_Ages { get; set; }
