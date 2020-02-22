@@ -13,9 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using TestWeb_Api.Models;
-
-
-
+using TestWeb_Api.Models_for_Metods;
 
 namespace TestWeb_Api.Controllers
 {
@@ -26,6 +24,14 @@ namespace TestWeb_Api.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public User Find_user([FromBody]Find_user_model phone)
+        {
+            using (var context = new AppContext())
+            {
+                User user = context.Users.First(x => x.Phone_Number == phone.phone_number);
+                return user;
+            }
         }
         
         [HttpPost("add_friend")]
@@ -60,7 +66,29 @@ namespace TestWeb_Api.Controllers
                 context.Friends.Update(friend);
                 context.SaveChanges();
             }
-                
+        }
+        public List<User> Show_friends([FromBody] User user)
+        {
+            using(var context = new AppContext())
+            {
+                var list = context.Friends.Where(x => x.Answer == true & (x.Phone_Number_Sender == user.Phone_Number || x.Phone_Number_Receiver == user.Phone_Number)).ToList();
+                List<User> users = new List<User>();
+                int z;
+                foreach(Friend s in list)
+                {
+                    if(s.Phone_Number_Sender == user.Phone_Number)
+                    {
+                        z = s.Id_User_Receiver;
+                    }
+                    else
+                    {
+                        z = s.Id_User_Sender;
+                    }
+                    User friend_user = context.Users.First(x => x.Id_User == z);
+                    users.Add(friend_user);
+                }
+                return users;
+            }
             
         }
     }
