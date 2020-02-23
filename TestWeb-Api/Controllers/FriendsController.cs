@@ -35,25 +35,32 @@ namespace TestWeb_Api.Controllers
         }
         
         [HttpPost("add_friend")]
-        public void Add_friend([FromBody]List<User> users)
+        public void Add_friend([FromBody]Friend_test_add_friend friends)
         {
+            Find_user_model phone_sender = new Find_user_model
+            {
+                phone_number = friends.phone_number_sender
+            };
+            Find_user_model phone_receiver = new Find_user_model
+            {
+                phone_number = friends.phone_number_receiver
+            };
+            var User_Sender = Find_user(phone_sender);
+            var User_Receiver = Find_user(phone_receiver);
+            Friend friend = new Friend
+            {
+                Id_User_Sender = User_Sender.Id_User,
+                Id_User_Receiver = User_Receiver.Id_User,
+                Phone_Number_Sender = User_Sender.Phone_Number,
+                Phone_Number_Receiver = User_Receiver.Phone_Number,
+                Answer = false,
+                Checked = false
+            };
             using(var context = new AppContext())
             {
-                var User_Sender = context.Users.First(x => x.Phone_Number == users[0].Phone_Number);
-                var User_Receiver = context.Users.First(x => x.Phone_Number == users[1].Phone_Number);
-                Friend friend = new Friend
-                {
-                    Id_User_Sender = User_Sender.Id_User,
-                    Id_User_Receiver = User_Receiver.Id_User,
-                    Phone_Number_Sender = User_Sender.Phone_Number,
-                    Phone_Number_Receiver = User_Receiver.Phone_Number,
-                    Answer = false,
-                    Checked = false
-                };
                 context.Friends.Add(friend);
                 context.SaveChanges();
             }
-            
         }
         [HttpPost("Checked_friend")]
         public void Check_friend([FromBody] Friend_test friends)
@@ -67,6 +74,7 @@ namespace TestWeb_Api.Controllers
                 context.SaveChanges();
             }
         }
+        [HttpPost("Show_friends")]
         public List<User> Show_friends([FromBody] User user)
         {
             using(var context = new AppContext())

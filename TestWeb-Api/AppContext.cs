@@ -26,12 +26,12 @@ namespace TestWeb_Api
         {
             modelBuilder.Entity<Connection_Event_Category>().HasKey(u => new { u.Id_Event, u.Id_Categories });
             modelBuilder.Entity<Friend>().HasKey(u => new { u.Id_User_Sender, u.Id_User_Receiver });
-            
+            modelBuilder.Entity<MessageModel>().HasKey(u => new { u.Id_User_Sender, u.Id_User_Receiver });
         }
         public DbSet<Criterions_Gender> Criterions_Genders { get; set; }
         public DbSet<Criterions_Age> Criterions_Ages { get; set; }
         public DbSet<Friend> Friends { get; set; }
-        
+        public DbSet<MessageModel> Message { get; set; }
 
     } 
 }

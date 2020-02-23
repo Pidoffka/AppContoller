@@ -25,8 +25,9 @@ namespace TestWeb_Api.Models
         
         [Required]
         public string Password { get; set; }
-
+        [Required]
         public string Avatar { get; set; }
+        [Required]
         public string JsonToken { get; set; }
         //public virtual ICollection<Team_to_Event> Teams_to_Events { get; set; }
         //public virtual ICollection<Friend> Friends { get; set; }
