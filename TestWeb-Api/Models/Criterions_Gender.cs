@@ -4,17 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace TestWeb_Api.Models
 {
-    public class Category
+    public class Criterions_Gender
     {
         [Key]
         [Required]
-        public int Id_Categories { get; set; }
+        public int Id_Team { get; set; }
         [Required]
-        public string Name_Categories { get; set; }
-        public virtual ICollection<Connection_Event_Category> Connection_Event_Categories { get; set; }
-        
+        public string Gender { get; set; }
+        public virtual Team_to_Event Teams_To_Events { get; set; }
     }
 }

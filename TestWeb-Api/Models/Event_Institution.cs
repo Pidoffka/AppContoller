@@ -21,5 +21,7 @@ namespace TestWeb_Api.Models
         public string Image { get; set; }
         public string Phone_Number { get; set; }
         public string Email { get; set; }
+        public virtual ICollection<Connection_Event_Category> Connection_Event_Categories { get; set; }
+        public virtual ICollection<Team_to_Event> Teams_to_Events { get; set; }
     }
 }

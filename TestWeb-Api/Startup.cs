@@ -13,16 +13,61 @@ using TestWeb_Api.Models;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace TestWeb_Api
 {
     public class Startup
     {
+        private void Serialize<T>(string fileName, T data)
+        {
+            using (var sw = new StreamWriter(fileName))
+            {
+                using (var jsonWriter = new JsonTextWriter(sw))
+                {
+                    var serializer = new JsonSerializer();
+                    serializer.Serialize(jsonWriter, data);
+                }
+            }
+        }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             //using var appContext = new AppContext();
             //appContext.Database.Migrate();
+            List<User> users = new List<User>();
+            User user1 = new User
+            {
+                Id_User = 3,
+                Name = "df",
+                Surname = "df",
+                Date_of_Birthday = new DateTime(2000, 1,7),
+                Gender = "Male",
+                Phone_Number = "+79999999799",
+                Password = "HuY",
+                JsonToken = "sfgfdsgdsf",
+                Avatar = "gfhsdfgfhs"
+                
+                
+            };
+            User user2 = new User
+            {
+                Id_User = 4,
+                Name = "df",
+                Surname = "df",
+                Date_of_Birthday = DateTime.Now,
+                Gender = "Male",
+                Phone_Number = "+79093906714",
+                Password = "HuY",
+                JsonToken = "sfgfdsgdsf",
+                Avatar = "gfhsdfgfhs",
+                
+                
+            };
+            users.Add(user1);
+            users.Add(user2);
+            Serialize("test.json", users);
         }
 
         public IConfiguration Configuration { get; }

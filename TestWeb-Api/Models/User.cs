@@ -28,6 +28,11 @@ namespace TestWeb_Api.Models
 
         public string Avatar { get; set; }
         public string JsonToken { get; set; }
+        public string Avatar { get; set; }
+        //public virtual ICollection<Team_to_Event> Teams_to_Events { get; set; }
+        //public virtual ICollection<Friend> Friends { get; set; }
         
+
+
     }
 }
