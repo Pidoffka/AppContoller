@@ -7,6 +7,7 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Date_of_Birthday { get; set; }
+        public string Avatar { get; set; }
         public string Gender { get; set; }
     }
 }

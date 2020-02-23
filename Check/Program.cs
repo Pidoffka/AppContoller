@@ -13,21 +13,21 @@ namespace Check
         private static readonly string checkUrl = "https://www.mypokupashkin.ru/Reg/check_signin";
         static async System.Threading.Tasks.Task Main(string[] args)
         {
-            var json = JsonConvert.SerializeObject(new AuthModel()
-            {
-                Name = "TOTPAREN",
-                Password = "111",
-                PhoneNumber = "89093516222"
-            });
+            //var json = JsonConvert.SerializeObject(new AuthModel()
+            //{
+            //    Name = "TOTPAREN",
+            //    Password = "111",
+            //    PhoneNumber = "89093516222"
+            //});
 
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            Console.WriteLine(json);
-            using (HttpClient httpClient = new HttpClient())
-            {
-                HttpResponseMessage response = await httpClient.PostAsync(checkUrl, content);
-                string result = response.StatusCode.ToString();
-                Console.WriteLine("Result:" + result.Replace("  ", ""));
-            }
+            //var content = new StringContent(json, Encoding.UTF8, "application/json");
+            //Console.WriteLine(json);
+            //using (HttpClient httpClient = new HttpClient())
+            //{
+            //    HttpResponseMessage response = await httpClient.PostAsync(checkUrl, content);
+            //    string result = response.StatusCode.ToString();
+            //    Console.WriteLine("Result:" + result.Replace("  ", ""));
+            //}
         }
     }
 }

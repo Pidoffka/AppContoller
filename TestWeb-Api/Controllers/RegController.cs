@@ -47,6 +47,7 @@ namespace TestWeb_Api.Controllers
                 Gender = authModel.Gender,
                 Phone_Number = authModel.Phone_Number,
                 Password = authModel.Password,
+                Avatar = authModel.Avatar,
                 JsonToken = AddJwt(authModel.Phone_Number)
             };
             using (var context = new AppContext())
@@ -75,11 +76,11 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("checkJwt")]
-        public string CheckJwt(string token)
+        public string CheckJwt([FromBody]JWT jwt)
         {
             using(var appContext = new AppContext())
             {
-                var user = appContext.Users.Where(x => x.JsonToken == token).ToList();
+                var user = appContext.Users.Where(x => x.JsonToken == jwt.Token).ToList();
                 if(user.Count() == 0)
                 {
                     return "null";
