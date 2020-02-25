@@ -11,19 +11,19 @@ namespace TestWeb_Api.Models
         [Key]
         [Required]
         public int Id_User_Sender { get; set; }
-        [Required]
-        public string Name_Sender { get; set; }
+        
         [Key]
         [Required]
         public int Id_User_Receiver { get; set; }
-        [Required]
-        public string Name_Receiver { get; set; }
+        
         [Required]
         public string Text { get; set; }
         [Required]
         public bool Checked { get; set; }
         [Required]
         public bool Viewed { get; set; }
+        [Required]
+        public DateTime Date_time_send { get; set; }
 
     }
 }

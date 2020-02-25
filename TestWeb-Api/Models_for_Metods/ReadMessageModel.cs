@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace TestWeb_Api.Models_for_Metods
 {
-    public class Friend_test_add_friend
+    public class ReadMessageModel
     {
-        public string phone_number_sender { get; set; }
-        public string phone_number_receiver { get; set; }
+        public int Id_User_Reader { get; set; }
+        public int Id_User_Sender { get; set; }
     }
 }

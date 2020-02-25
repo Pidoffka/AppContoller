@@ -33,26 +33,32 @@ namespace TestWeb_Api.Controllers
                 return user;
             }
         }
+
+        public bool CheckUser(int id)
+        {
+            using(var context = new AppContext())
+            {
+                return context.Users.Any(x => x.Id_User == id);
+            }
+        }
         
         [HttpPost("add_friend")]
-        public void Add_friend([FromBody]Friend_test_add_friend friends)
+        public bool Add_friend([FromBody] List<User> user)
         {
-            Find_user_model phone_sender = new Find_user_model
+            if (!CheckUser(user[0].Id_User))
             {
-                phone_number = friends.phone_number_sender
-            };
-            Find_user_model phone_receiver = new Find_user_model
+                return false;
+            }
+            if (!CheckUser(user[1].Id_User))
             {
-                phone_number = friends.phone_number_receiver
-            };
-            var User_Sender = Find_user(phone_sender);
-            var User_Receiver = Find_user(phone_receiver);
+                return false;
+            }
             Friend friend = new Friend
             {
-                Id_User_Sender = User_Sender.Id_User,
-                Id_User_Receiver = User_Receiver.Id_User,
-                Phone_Number_Sender = User_Sender.Phone_Number,
-                Phone_Number_Receiver = User_Receiver.Phone_Number,
+                Id_User_Sender = user[0].Id_User,
+                Id_User_Receiver = user[1].Id_User,
+                Phone_Number_Sender = user[0].Phone_Number,
+                Phone_Number_Receiver = user[1].Phone_Number,
                 Answer = false,
                 Checked = false
             };
@@ -60,6 +66,7 @@ namespace TestWeb_Api.Controllers
             {
                 context.Friends.Add(friend);
                 context.SaveChanges();
+                return true;
             }
         }
         [HttpPost("Checked_friend")]

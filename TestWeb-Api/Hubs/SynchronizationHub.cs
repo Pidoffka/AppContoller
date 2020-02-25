@@ -11,12 +11,26 @@ namespace TestWeb_Api.Hubs
 {
     public class SynchronizationHub: Hub
     {
-        //public async Task Message(MessageModel message)
+        //public async Task SendMessage_Server(SendMessageModel message)
         //{
         //    string client_sender_id = message.Id_User_Sender.ToString();
         //    string client_receiver_id = message.Id_User_Receiver.ToString();
-        //    await Clients.Client(client_receiver_id).SendAsync("addMessage", message.Name_Receiver, message.Text, client_receiver_id);
-        //    await Clients.Caller.SendAsync("addMessage", message.Name_Receiver, message.Text, client_receiver_id);
+        //    await Clients.Client(client_receiver_id).SendAsync("SendMessage", message);
+        //    await Clients.Client(client_sender_id).SendAsync("SendMessage", message);
+        //}
+        //public async Task ReadMessage_Server(ReadMessageModel message)
+        //{
+        //    string client_sender_id = message.Id_User_Sender.ToString();
+        //    string client_receiver_id = message.Id_User_Reader.ToString();
+        //    await Clients.Client(client_receiver_id).SendAsync("ReadMessage", message);
+        //    await Clients.Client(client_sender_id).SendAsync("ReadMessage", message);
+        //}
+        //public async Task DeleteMessage_Server(DeleteMessageModel message)
+        //{
+        //    string client_sender_id = message.Id_User_Sender.ToString();
+        //    string client_receiver_id = message.Id_User_Reader.ToString();
+        //    await Clients.Client(client_receiver_id).SendAsync("DeleteMessage", message);
+        //    await Clients.Client(client_sender_id).SendAsync("DeleteMessage", message);
         //}
 
         //public async Task Add_Friend_Server(Friend_test_add_friend friends)

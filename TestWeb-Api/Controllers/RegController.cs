@@ -43,7 +43,7 @@ namespace TestWeb_Api.Controllers
             {
                 Name = authModel.Name,
                 Surname = authModel.Surname,
-                Date_of_Birthday = DateTime.ParseExact(authModel.Date_of_Birthday, "yyyy.MM.dd", CultureInfo.InvariantCulture),
+                Date_of_Birthday = authModel.Date_of_Birthday,
                 Gender = authModel.Gender,
                 Phone_Number = authModel.Phone_Number,
                 Password = authModel.Password,
