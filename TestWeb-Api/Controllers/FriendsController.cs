@@ -43,7 +43,7 @@ namespace TestWeb_Api.Controllers
         }
         
         [HttpPost("add_friend")]
-        public bool Add_friend([FromBody] List<User> user)
+        public bool Add_friend([FromBody]List<User> user)
         {
             if (!CheckUser(user[0].Id_User))
             {
