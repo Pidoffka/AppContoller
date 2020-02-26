@@ -37,7 +37,7 @@ namespace TestWeb_Api.Controllers
         {
             if (CheckUser(authModel.Phone_Number))
             {
-                return "false";
+                return "null";
             }
             User user = new User()
             {
@@ -66,7 +66,7 @@ namespace TestWeb_Api.Controllers
                 var user = context.Users.Where(x => x.Phone_Number == authModel.Phone_Number & x.Password == authModel.Password).ToList();
                 if(user.Count() == 0)
                 {
-                    return "false";
+                    return "null";
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace TestWeb_Api.Controllers
                 var user = appContext.Users.Where(x => x.JsonToken == jwt.Token).ToList();
                 if(user.Count() == 0)
                 {
-                    return "null";
+                    return null;
                 }
                 else
                 {
