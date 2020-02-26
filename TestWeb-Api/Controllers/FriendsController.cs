@@ -34,7 +34,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         
-        [HttpPost("add_friend")]
+        [HttpPost("request_on_a_friend")]
         public void Add_friend([FromBody]Friend_test_add_friend friends)
         {
             Find_user_model phone_sender = new Find_user_model
@@ -62,7 +62,7 @@ namespace TestWeb_Api.Controllers
                 context.SaveChanges();
             }
         }
-        [HttpPost("Checked_friend")]
+        [HttpPost("answer_on_request")]
         public void Check_friend([FromBody] Friend_test friends)
         {
             using (var context = new AppContext())
@@ -74,8 +74,8 @@ namespace TestWeb_Api.Controllers
                 context.SaveChanges();
             }
         }
-        [HttpPost("Show_friends")]
-        public List<User> Show_friends([FromBody] User user)
+        [HttpPost("show_friends")]
+        public List<User> Show_friends([FromBody] UserWithStringDateTime user)
         {
             using(var context = new AppContext())
             {
