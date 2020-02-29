@@ -103,5 +103,14 @@ namespace TestWeb_Api.Controllers
 
             }
         }
+
+        public List<MessageModel> Show_Message([FromBody] ShowMessageModel model)
+        {
+            using(var context = new AppContext())
+            {
+                var list = context.Message.Where(x => (x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver) || (x.Id_User_Sender == model.Id_User_Receiver & x.Id_User_Receiver == model.Id_User_Sender)).ToList();
+                return list;
+            }
+        }
     }
 }

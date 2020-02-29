@@ -15,6 +15,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using Newtonsoft.Json;
+using TestWeb_Api.Hubs;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNet.SignalR;
+
+
+using Owin;
+using Microsoft.AspNetCore.Http.Connections;
 
 namespace TestWeb_Api
 {
@@ -68,6 +75,7 @@ namespace TestWeb_Api
                             ValidateIssuerSigningKey = true,
                         };
                     });
+            services.AddSignalR();
             services.AddControllersWithViews();
         }
 
@@ -97,6 +105,17 @@ namespace TestWeb_Api
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<SynchronizationHub>("/Synchronization",
+                    options => {
+                        options.ApplicationMaxBufferSize = 64;
+                        options.TransportMaxBufferSize = 64;
+                        options.LongPolling.PollTimeout = System.TimeSpan.FromMinutes(1);
+                        options.Transports = HttpTransportType.LongPolling | HttpTransportType.WebSockets;
+                    });
+            });
+
 
         }
     }
