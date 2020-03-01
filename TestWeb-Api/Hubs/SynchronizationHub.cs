@@ -16,25 +16,26 @@ namespace TestWeb_Api.Hubs
     {
         public async Task SendMessage_Server(MessageModel message)
         {
-            var sosi = new MessageController();
-            sosi.SendMessage(message);
+            var controller = new MessageController();
+            controller.SendMessage(message);
             string client_receiver_id = message.Id_User_Receiver.ToString();
             await Clients.Client(client_receiver_id).SendAsync("GetMessage", message);
             
         }
-        public async Task ReadMessage_Server(ReadMessageModel message)
+        public async Task ReadMessage_Server(MessageModel message)
         {
+            var controller = new MessageController();
+            controller.ReadMessage(message);
             string client_sender_id = message.Id_User_Sender.ToString();
-            string client_receiver_id = message.Id_User_Reader.ToString();
-            await Clients.Client(client_receiver_id).SendAsync("ReadMessage", message);
             await Clients.Client(client_sender_id).SendAsync("ReadMessage", message);
         }
-        public async Task DeleteMessage_Server(DeleteMessageModel message)
+        public async Task DeleteMessage_Server(MessageModel message)
         {
-            string client_sender_id = message.Id_User_Sender.ToString();
-            string client_receiver_id = message.Id_User_Reader.ToString();
-            await Clients.Client(client_receiver_id).SendAsync("DeleteMessage", message);
-            await Clients.Client(client_sender_id).SendAsync("DeleteMessage", message);
+            var controller = new MessageController();
+            controller.DeleteMessage(message);
+            string client_receiver_id = message.Id_User_Receiver.ToString();
+            await Clients.Client(client_receiver_id).SendAsync("DeletedMessage", message);
+            
         }
 
         public async Task Add_Friend_Server(Friend_test friends)

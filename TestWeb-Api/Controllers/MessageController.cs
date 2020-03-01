@@ -33,16 +33,9 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("sendmessage")]
-        public bool SendMessage([FromBody] MessageModel model)
+        public void SendMessage([FromBody] MessageModel model)
         {
-            if (!CheckUser(model.Id_User_Sender))
-            {
-                return false;
-            }
-            if (!CheckUser(model.Id_User_Receiver))
-            {
-                return false;
-            }
+            
             MessageModel message = new MessageModel
             {
                 Id_User_Sender = model.Id_User_Sender,
@@ -56,20 +49,13 @@ namespace TestWeb_Api.Controllers
             {
                 context.Message.Add(message);
                 context.SaveChanges();
-                return true;
+                
             }
         }
         [HttpPost("readmessage")]
-        public bool ReadMessage([FromBody] MessageModel model)
+        public void ReadMessage([FromBody] MessageModel model)
         {
-            if (!CheckUser(model.Id_User_Sender))
-            {
-                return false;
-            }
-            if (!CheckUser(model.Id_User_Receiver))
-            {
-                return false;
-            }
+            
             using(var context = new AppContext())
             {
                 var messages = context.Message.Where(x => x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Sender & x.Checked == false & x.Viewed == true).ToList();
@@ -79,28 +65,19 @@ namespace TestWeb_Api.Controllers
                     context.Message.Update(q);
                     context.SaveChanges();
                 }
-                return true;
+                
             }
         }
         [HttpPost("deletemessage")]
-        public bool DeleteMessage([FromBody] MessageModel model)
+        public void DeleteMessage([FromBody] MessageModel model)
         {
-            if (!CheckUser(model.Id_User_Sender))
-            {
-                return false;
-            }
-            if (!CheckUser(model.Id_User_Receiver))
-            {
-                return false;
-            }
+            
             using(var context = new AppContext())
             {
                 var message = context.Message.First(x => x.Date_time_send == model.Date_time_send & x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver);
                 message.Viewed = false;
                 context.Message.Update(message);
                 context.SaveChanges();
-                return true;
-
             }
         }
 
