@@ -33,7 +33,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("sendmessage")]
-        public bool SendMessage([FromBody] SendMessageModel model)
+        public bool SendMessage([FromBody] MessageModel model)
         {
             if (!CheckUser(model.Id_User_Sender))
             {
@@ -50,7 +50,7 @@ namespace TestWeb_Api.Controllers
                 Text = model.Text,
                 Viewed = true,
                 Checked = false,
-                Date_time_send = DateTime.Now
+                Date_time_send = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString()
             };
             using(var context = new AppContext())
             {
@@ -60,13 +60,13 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("readmessage")]
-        public bool ReadMessage([FromBody] ReadMessageModel model)
+        public bool ReadMessage([FromBody] MessageModel model)
         {
             if (!CheckUser(model.Id_User_Sender))
             {
                 return false;
             }
-            if (!CheckUser(model.Id_User_Reader))
+            if (!CheckUser(model.Id_User_Receiver))
             {
                 return false;
             }
@@ -83,13 +83,13 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("deletemessage")]
-        public bool DeleteMessage([FromBody] DeleteMessageModel model)
+        public bool DeleteMessage([FromBody] MessageModel model)
         {
             if (!CheckUser(model.Id_User_Sender))
             {
                 return false;
             }
-            if (!CheckUser(model.Id_User_Reader))
+            if (!CheckUser(model.Id_User_Receiver))
             {
                 return false;
             }

@@ -23,7 +23,7 @@ namespace TestWeb_Api.Models
         [Required]
         public bool Viewed { get; set; }
         [Required]
-        public DateTime Date_time_send { get; set; }
+        public string Date_time_send { get; set; }
 
     }
 }

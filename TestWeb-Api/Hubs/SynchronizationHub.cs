@@ -7,18 +7,21 @@ using TestWeb_Api.Models;
 using System.Web;
 using TestWeb_Api.Models_for_Metods;
 using Microsoft.AspNetCore.Components;
+using TestWeb_Api.Controllers;
 
 namespace TestWeb_Api.Hubs
 {
     [Route("Synchronization")]
     public class SynchronizationHub: Hub
     {
-        public async Task SendMessage_Server(SendMessageModel message)
+        public async Task SendMessage_Server(MessageModel message)
         {
-            string client_sender_id = message.Id_User_Sender.ToString();
+            var sosi = new MessageController();
+            sosi.SendMessage(message);
+            
             string client_receiver_id = message.Id_User_Receiver.ToString();
-            await Clients.Client(client_receiver_id).SendAsync("SendMessage", message);
-            await Clients.Client(client_sender_id).SendAsync("SendMessage", message);
+            await Clients.Client(client_receiver_id).SendAsync("GetMessage", message);
+            
         }
         public async Task ReadMessage_Server(ReadMessageModel message)
         {
