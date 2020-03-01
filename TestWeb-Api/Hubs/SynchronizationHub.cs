@@ -18,7 +18,6 @@ namespace TestWeb_Api.Hubs
         {
             var sosi = new MessageController();
             sosi.SendMessage(message);
-            
             string client_receiver_id = message.Id_User_Receiver.ToString();
             await Clients.Client(client_receiver_id).SendAsync("GetMessage", message);
             
