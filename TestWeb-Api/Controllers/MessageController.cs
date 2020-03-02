@@ -91,14 +91,14 @@ namespace TestWeb_Api.Controllers
                 return message;
             }
         }
-
-        public List<AllChatsModel> AllChats([FromBody] User user)
+        [HttpPost("allchats")]
+        public List<AllChatsModel> AllChats([FromBody]AllChatUser user)
         {
             List<AllChatsModel> chatsmodel = new List<AllChatsModel>();
             List<User> user_chart = new List<User>();
             using (var context = new AppContext())
             {
-                var list_messages = context.Message.Where(x => (x.Id_User_Sender == user.Id_User || x.Id_User_Receiver == user.Id_User) & x.Viewed == true).ToList();
+                List<MessageModel> list_messages = context.Message.Where(x => (x.Id_User_Sender == user.Id_User || x.Id_User_Receiver == user.Id_User) & x.Viewed == true).ToList();
                 foreach (MessageModel u in list_messages)
                 {
                     if (u.Id_User_Sender == user.Id_User)
