@@ -75,7 +75,7 @@ namespace TestWeb_Api.Controllers
             
             using(var context = new AppContext())
             {
-                var message = context.Message.First(x => x.Date_time_send == model.Date_time_send & x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver);
+                var message = context.Message.First(x => x.Id_Message == model.Id_Message & x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver);
                 message.Viewed = false;
                 context.Message.Update(message);
                 context.SaveChanges();
@@ -92,7 +92,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("allchats")]
-        public List<AllChatsModel> AllChats([FromBody]User user)
+        public List<AllChatsModel> AllChats([FromBody]AllChatUser user)
         {
             List<AllChatsModel> chatsmodel = new List<AllChatsModel>();
             List<User> user_chart = new List<User>();

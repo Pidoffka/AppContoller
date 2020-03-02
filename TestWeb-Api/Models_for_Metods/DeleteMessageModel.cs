@@ -9,6 +9,6 @@ namespace TestWeb_Api.Models_for_Metods
     {
         public int Id_User_Receiver { get; set; }
         public int Id_User_Sender { get; set; }
-        public string Date_time_send { get; set; }
+        public int Id_Message { get; set; }
     }
 }
