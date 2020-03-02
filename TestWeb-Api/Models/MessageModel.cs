@@ -24,6 +24,6 @@ namespace TestWeb_Api.Models
         public bool Viewed { get; set; }
         [Required]
         public string Date_time_send { get; set; }
-
+        
     }
 }

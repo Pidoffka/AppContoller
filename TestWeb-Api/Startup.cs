@@ -108,7 +108,8 @@ namespace TestWeb_Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<SynchronizationHub>("/Synchronization",
-                    options => {
+                    options =>
+                    {
                         options.ApplicationMaxBufferSize = 64;
                         options.TransportMaxBufferSize = 64;
                         options.LongPolling.PollTimeout = System.TimeSpan.FromMinutes(1);

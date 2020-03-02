@@ -7,7 +7,7 @@ namespace TestWeb_Api.Models_for_Metods
 {
     public class ReadMessageModel
     {
-        public int Id_User_Reader { get; set; }
+        public int Id_User_Receiver { get; set; }
         public int Id_User_Sender { get; set; }
     }
 }

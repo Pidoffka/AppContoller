@@ -33,7 +33,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("sendmessage")]
-        public bool SendMessage([FromBody] MessageModel model)
+        public bool SendMessage([FromBody] SendMessageModel model)
         {
             
             MessageModel message = new MessageModel
@@ -53,7 +53,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("readmessage")]
-        public bool ReadMessage([FromBody] MessageModel model)
+        public bool ReadMessage([FromBody] ReadMessageModel model)
         {
             
             using(var context = new AppContext())
@@ -70,7 +70,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("deletemessage")]
-        public bool DeleteMessage([FromBody] MessageModel model)
+        public bool DeleteMessage([FromBody] DeleteMessageModel model)
         {
             
             using(var context = new AppContext())
@@ -92,6 +92,20 @@ namespace TestWeb_Api.Controllers
             }
         }
 
-
+        //public List<AllChatsModel> AllChats([FromBody] User user)
+        //{
+        //    List<User> user_chart = new List<User>();
+        //    using(var context = new AppContext())
+        //    {
+        //        var list_messages = context.Message.Where(x => x.Id_User_Sender == user.Id_User || x.Id_User_Receiver == user.Id_User).ToList();
+        //        foreach(MessageModel u in list_messages)
+        //        {
+        //            if(u.Id_User_Sender == user.Id_User)
+        //            {
+        //                User 
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
