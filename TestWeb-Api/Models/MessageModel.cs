@@ -10,9 +10,11 @@ namespace TestWeb_Api.Models
     {
         [Key]
         [Required]
+        public int Id_Message { get; set; }
+        [Required]
         public int Id_User_Sender { get; set; }
         
-        [Key]
+        
         [Required]
         public int Id_User_Receiver { get; set; }
         
