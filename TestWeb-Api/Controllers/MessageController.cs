@@ -82,30 +82,60 @@ namespace TestWeb_Api.Controllers
                 return true;
             }
         }
-        [HttpPost("ShowMessage")]
+
         public List<MessageModel> Show_Message([FromBody] ShowMessageModel model)
         {
             using(var context = new AppContext())
             {
-                var list = context.Message.Where(x => (x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver) || (x.Id_User_Sender == model.Id_User_Receiver & x.Id_User_Receiver == model.Id_User_Sender)).ToList();
-                return list;
+                var message = context.Message.Where(x => ((x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver)) || (x.Id_User_Sender == model.Id_User_Receiver & x.Id_User_Receiver == model.Id_User_Sender) & x.Viewed == true).ToList();
+                return message;
             }
         }
 
-        //public List<AllChatsModel> AllChats([FromBody] User user)
-        //{
-        //    List<User> user_chart = new List<User>();
-        //    using(var context = new AppContext())
-        //    {
-        //        var list_messages = context.Message.Where(x => x.Id_User_Sender == user.Id_User || x.Id_User_Receiver == user.Id_User).ToList();
-        //        foreach(MessageModel u in list_messages)
-        //        {
-        //            if(u.Id_User_Sender == user.Id_User)
-        //            {
-        //                User 
-        //            }
-        //        }
-        //    }
-        //}
+        public List<AllChatsModel> AllChats([FromBody] User user)
+        {
+            List<AllChatsModel> chatsmodel = new List<AllChatsModel>();
+            List<User> user_chart = new List<User>();
+            using (var context = new AppContext())
+            {
+                var list_messages = context.Message.Where(x => (x.Id_User_Sender == user.Id_User || x.Id_User_Receiver == user.Id_User) & x.Viewed == true).ToList();
+                foreach (MessageModel u in list_messages)
+                {
+                    if (u.Id_User_Sender == user.Id_User)
+                    {
+                        User i_user = context.Users.First(x => x.Id_User == u.Id_User_Receiver);
+                        if (!user_chart.Contains(i_user))
+                        {
+                            user_chart.Add(i_user);
+                        }
+                    }
+                    if(u.Id_User_Receiver == user.Id_User)
+                    {
+                        User i_user = context.Users.First(x => x.Id_User == u.Id_User_Sender);
+                        if (!user_chart.Contains(i_user))
+                        {
+                            user_chart.Add(i_user);
+                        }
+                    }
+                }
+                foreach(User q in user_chart)
+                {
+                    var message = context.Message.Where(x => (x.Id_User_Sender == q.Id_User & x.Id_User_Receiver == user.Id_User) || (x.Id_User_Sender == user.Id_User & x.Id_User_Receiver == q.Id_User)).ToList();
+                    MessageModel model = message.Last();
+                    AllChatsModel chatmodel = new AllChatsModel
+                    {
+                        Id_User = q.Id_User,
+                        Name = q.Name,
+                        Surname = q.Surname,
+                        Avatar = q.Avatar,
+                        Id_User_sender = model.Id_User_Sender,
+                        Text_Message = model.Text
+                    };
+                    chatsmodel.Add(chatmodel);
+                }
+            }
+            chatsmodel.Reverse();
+            return chatsmodel;
+        }
     }
 }
