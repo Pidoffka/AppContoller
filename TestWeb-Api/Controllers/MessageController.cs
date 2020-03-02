@@ -33,7 +33,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("sendmessage")]
-        public void SendMessage([FromBody] MessageModel model)
+        public bool SendMessage([FromBody] MessageModel model)
         {
             
             MessageModel message = new MessageModel
@@ -49,11 +49,11 @@ namespace TestWeb_Api.Controllers
             {
                 context.Message.Add(message);
                 context.SaveChanges();
-                
+                return true;
             }
         }
         [HttpPost("readmessage")]
-        public void ReadMessage([FromBody] MessageModel model)
+        public bool ReadMessage([FromBody] MessageModel model)
         {
             
             using(var context = new AppContext())
@@ -65,11 +65,12 @@ namespace TestWeb_Api.Controllers
                     context.Message.Update(q);
                     context.SaveChanges();
                 }
+                return true;
                 
             }
         }
         [HttpPost("deletemessage")]
-        public void DeleteMessage([FromBody] MessageModel model)
+        public bool DeleteMessage([FromBody] MessageModel model)
         {
             
             using(var context = new AppContext())
@@ -78,6 +79,7 @@ namespace TestWeb_Api.Controllers
                 message.Viewed = false;
                 context.Message.Update(message);
                 context.SaveChanges();
+                return true;
             }
         }
 
@@ -89,5 +91,7 @@ namespace TestWeb_Api.Controllers
                 return list;
             }
         }
+
+
     }
 }
