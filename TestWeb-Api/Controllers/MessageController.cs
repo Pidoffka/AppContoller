@@ -82,7 +82,7 @@ namespace TestWeb_Api.Controllers
                 return true;
             }
         }
-
+        [HttpPost("ShowMessage")]
         public List<MessageModel> Show_Message([FromBody] ShowMessageModel model)
         {
             using(var context = new AppContext())
