@@ -121,6 +121,7 @@ namespace TestWeb_Api.Controllers
                 foreach(User q in user_chart)
                 {
                     var message = context.Message.Where(x => (x.Id_User_Sender == q.Id_User & x.Id_User_Receiver == user.Id_User) || (x.Id_User_Sender == user.Id_User & x.Id_User_Receiver == q.Id_User)).ToList();
+                    int count_dont_read = message.Count(x => x.Id_User_Receiver == user.Id_User & x.Checked == false);
                     MessageModel model = message.Last();
                     AllChatsModel chatmodel = new AllChatsModel
                     {
@@ -129,7 +130,8 @@ namespace TestWeb_Api.Controllers
                         Surname = q.Surname,
                         Avatar = q.Avatar,
                         Id_User_sender = model.Id_User_Sender,
-                        Text_Message = model.Text
+                        Text_Message = model.Text,
+                        Count_Dont_Read = count_dont_read
                     };
                     chatsmodel.Add(chatmodel);
                 }
