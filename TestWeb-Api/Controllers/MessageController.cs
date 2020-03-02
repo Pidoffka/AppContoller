@@ -92,7 +92,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("allchats")]
-        public List<AllChatsModel> AllChats([FromBody]AllChatUser user)
+        public List<AllChatsModel> AllChats([FromBody]User user)
         {
             List<AllChatsModel> chatsmodel = new List<AllChatsModel>();
             List<User> user_chart = new List<User>();
