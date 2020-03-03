@@ -88,6 +88,7 @@ namespace TestWeb_Api.Controllers
             using(var context = new AppContext())
             {
                 var message = context.Message.Where(x => ((x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver)) || (x.Id_User_Sender == model.Id_User_Receiver & x.Id_User_Receiver == model.Id_User_Sender) & x.Viewed == true).ToList();
+                message.OrderBy(x => x.Id_Message);
                 return message;
             }
         }
@@ -133,7 +134,11 @@ namespace TestWeb_Api.Controllers
                         Text_Message = model.Text,
                         Count_Dont_Read = count_dont_read
                     };
-                    chatsmodel.Add(chatmodel);
+                    if (!chatsmodel.Contains(chatmodel))
+                    {
+                        chatsmodel.Add(chatmodel);
+                    }
+                    
                 }
             }
             chatsmodel.Reverse();
