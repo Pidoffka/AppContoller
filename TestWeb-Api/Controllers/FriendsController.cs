@@ -34,43 +34,45 @@ namespace TestWeb_Api.Controllers
             }
         }
 
-        public bool CheckUser(int id)
+        public bool CheckUser(string phone)
         {
             using(var context = new AppContext())
             {
-                return context.Users.Any(x => x.Id_User == id);
+                return context.Users.Any(x => x.Phone_Number == phone);
             }
         }
         
-        [HttpPost("add_friend")]
-        public bool Add_friend([FromBody]List<User> user)
+        [HttpPost("sendrequest")]
+        public bool Send_Request([FromBody]SendRequestModel model)
         {
-            if (!CheckUser(user[0].Id_User))
+            if (!CheckUser(model.Phone_Number_Sender))
             {
                 return false;
             }
-            if (!CheckUser(user[1].Id_User))
+            if (!CheckUser(model.Phone_Number_Receiver))
             {
                 return false;
             }
-            Friend friend = new Friend
-            {
-                Id_User_Sender = user[0].Id_User,
-                Id_User_Receiver = user[1].Id_User,
-                Phone_Number_Sender = user[0].Phone_Number,
-                Phone_Number_Receiver = user[1].Phone_Number,
-                Answer = false,
-                Checked = false
-            };
             using(var context = new AppContext())
             {
+                User user_sender = context.Users.First(x => x.Phone_Number == model.Phone_Number_Sender);
+                User user_receiver = context.Users.First(x => x.Phone_Number == model.Phone_Number_Receiver);
+                Friend friend = new Friend
+                {
+                    Id_User_Sender = user_sender.Id_User,
+                    Id_User_Receiver = user_receiver.Id_User,
+                    Phone_Number_Sender = user_sender.Phone_Number,
+                    Phone_Number_Receiver = user_receiver.Phone_Number,
+                    Answer = false,
+                    Checked = false
+                };
                 context.Friends.Add(friend);
                 context.SaveChanges();
                 return true;
             }
         }
-        [HttpPost("Checked_friend")]
-        public void Check_friend([FromBody] Friend_test friends)
+        [HttpPost("addfriend")]
+        public void Add_Friend([FromBody] Friend_test friends)
         {
             using (var context = new AppContext())
             {
