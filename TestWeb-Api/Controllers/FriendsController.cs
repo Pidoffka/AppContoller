@@ -106,5 +106,14 @@ namespace TestWeb_Api.Controllers
             }
             
         }
+        [HttpPost("applications")]
+        public List<Friend> Applications([FromBody] ApplicationModel user)
+        {
+            using (var context = new AppContext())
+            {
+                var applications = context.Friends.Where(x => x.Checked == false & x.Id_User_Receiver == user.Id_User).ToList();
+                return applications;
+            }
+        }
     }
 }
