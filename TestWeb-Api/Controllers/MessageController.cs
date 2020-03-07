@@ -88,8 +88,13 @@ namespace TestWeb_Api.Controllers
             using(var context = new AppContext())
             {
                 var message = context.Message.Where(x => ((x.Id_User_Sender == model.Id_User_Sender & x.Id_User_Receiver == model.Id_User_Receiver)) || (x.Id_User_Sender == model.Id_User_Receiver & x.Id_User_Receiver == model.Id_User_Sender) & x.Viewed == true).ToList();
-                message.OrderBy(x => x.Id_Message);
-                return message;
+                var sortedmessage = from u in message orderby u.Id_Message select u;
+                List<MessageModel> newmodel = new List<MessageModel>();
+                foreach(var k in sortedmessage)
+                {
+                    newmodel.Add(k);
+                }
+                return newmodel;
             }
         }
         [HttpPost("allchats")]
