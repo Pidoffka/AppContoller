@@ -109,12 +109,18 @@ namespace TestWeb_Api.Controllers
             
         }
         [HttpPost("applications")]
-        public List<Friend> Applications([FromBody] ApplicationModel user)
+        public List<User> Applications([FromBody] ApplicationModel user)
         {
             using (var context = new AppContext())
             {
+                List<User> users = new List<User>();
                 var applications = context.Friends.Where(x => x.Checked == false & x.Id_User_Receiver == user.Id_User).ToList();
-                return applications;
+                foreach(var x in applications)
+                {
+                    var user_receiver = context.Users.First(u => u.Id_User == x.Id_User_Sender);
+                    users.Add(user_receiver);
+                }
+                return users;
             }
         }
     }
