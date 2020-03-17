@@ -88,12 +88,21 @@ namespace TestWeb_Api.Controllers
                     List<int> marks_institution = context.Marks_Institutions.Where(x => x.Id_Institution == u.Id_Institution).Select(q => q.Mark).ToList();
                     var count = 0;
                     int sum = 0;
+                    decimal avg = new decimal();
                     foreach (int t in marks_institution)
                     {
                         sum = sum + t;
                         count = count + 1;
                     }
-                    decimal avg = sum / count;
+                    if(count == 0)
+                    {
+                        avg = 0;
+                    }
+                    else
+                    {
+                        avg = sum / count;
+                    }
+                    
                     RankedInstitutionsModel model = new RankedInstitutionsModel
                     {
                         Id_Institution = u.Id_Institution,
@@ -116,6 +125,28 @@ namespace TestWeb_Api.Controllers
                 }
                 newmodel.Reverse();
                 return newmodel;
+            }
+        }
+        [HttpPost("addconnectioninstitutioncategory")]
+        public bool AddConnectionInstitutionCategory([FromBody] AddConnectionInstitutionCategoryModel model)
+        {
+            using(var context = new AppContext())
+            {
+                var pastconnection = context.Connection_Institutions_Categories.Where(x => x.Id_Institution == model.Id_Institution).Select(x => x.Id_Category).ToList();
+                foreach(var u in model.Id_Categories)
+                {
+                    if (!pastconnection.Contains(u.Id_Category))
+                    {
+                        ConnectionInstitutionsCategoriesModel newmodel = new ConnectionInstitutionsCategoriesModel
+                        {
+                            Id_Institution = model.Id_Institution,
+                            Id_Category = u.Id_Category
+                        };
+                        context.Connection_Institutions_Categories.Add(newmodel);
+                        context.SaveChanges();
+                    }
+                }
+                return true;
             }
         }
     }
