@@ -128,15 +128,16 @@ namespace TestWeb_Api.Controllers
                 {
                     var message = context.Message.Where(x => (x.Id_User_Sender == q.Id_User & x.Id_User_Receiver == user.Id_User) || (x.Id_User_Sender == user.Id_User & x.Id_User_Receiver == q.Id_User)).ToList();
                     int count_dont_read = message.Count(x => x.Id_User_Receiver == user.Id_User & x.Checked == false);
-                    MessageModel model = message.Last();
+                    var model = from u in message orderby u.Id_Message select u;
+                    var specialmodel = model.Last();
                     AllChatsModel chatmodel = new AllChatsModel
                     {
                         Id_User = q.Id_User,
                         Name = q.Name,
                         Surname = q.Surname,
                         Avatar = q.Avatar,
-                        Id_User_sender = model.Id_User_Sender,
-                        Text_Message = model.Text,
+                        Id_User_sender = specialmodel.Id_User_Sender,
+                        Text_Message = specialmodel.Text,
                         Count_Dont_Read = count_dont_read
                     };
                     if (!chatsmodel.Contains(chatmodel))

@@ -17,21 +17,22 @@ namespace TestWeb_Api
         {
             optionsBuilder.UseSqlServer(@"Server=wpl24.hosting.reg.ru;Database=u0933163_dan1a;User ID=u0933163_dan1a;Password=EfWe4QD7djDuRqh"); // connection string to your DB
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Event_Institution> Event_Institutions { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Team_to_Event> Teams_to_Events { get; set; }
-        public DbSet<Connection_Event_Category> Connections_Event_Categories { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Connection_Event_Category>().HasKey(u => new { u.Id_Event, u.Id_Categories });
             modelBuilder.Entity<Friend>().HasKey(u => new { u.Id_User_Sender, u.Id_User_Receiver });
-            
+            modelBuilder.Entity<ConnectionEventsCategoriesModel>().HasKey(u => new { u.Id_Event, u.Id_Category });
+            modelBuilder.Entity<ConnectionInstitutionsCategoriesModel>().HasKey(u => new { u.Id_Institution, u.Id_Category });
+            modelBuilder.Entity<MarksInstitutionsModel>().HasKey(u => new { u.Id_User, u.Id_Institution});
         }
-        public DbSet<Criterions_Gender> Criterions_Genders { get; set; }
-        public DbSet<Criterions_Age> Criterions_Ages { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<MessageModel> Message { get; set; }
-
+        public DbSet<EventsModel> Events { get; set; }
+        public DbSet<InstitutionsModel> Institutions { get; set; }
+        public DbSet<CategoriesModel> Categories { get; set; }
+        public DbSet<ConnectionEventsCategoriesModel> Connection_Events_Categories { get; set; }
+        public DbSet<ConnectionInstitutionsCategoriesModel> Connection_Institutions_Categories { get; set; }
+        public DbSet<MarksInstitutionsModel> Marks_Institutions { get; set; }
     } 
 }

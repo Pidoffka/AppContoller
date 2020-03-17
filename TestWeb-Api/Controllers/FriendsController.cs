@@ -42,7 +42,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         
-        [HttpPost("sendrequest")]
+        [HttpPost("send_request")]
         public bool Send_Request([FromBody]SendRequestModel model)
         {
             if (!CheckUser(model.Phone_Number_Sender))
@@ -72,7 +72,7 @@ namespace TestWeb_Api.Controllers
             }
         }
         [HttpPost("addfriend")]
-        public void Add_Friend([FromBody] Friend_test friends)
+        public bool Add_Friend([FromBody] Friend_test friends)
         {
             using (var context = new AppContext())
             {
@@ -81,6 +81,7 @@ namespace TestWeb_Api.Controllers
                 friend.Checked = true;
                 context.Friends.Update(friend);
                 context.SaveChanges();
+                return true;
             }
         }
         [HttpPost("Show_friends")]

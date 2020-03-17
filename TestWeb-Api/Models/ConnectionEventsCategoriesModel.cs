@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace TestWeb_Api.Models
 {
-    public class Criterions_Age
+    public class ConnectionEventsCategoriesModel
     {
         [Key]
         [Required]
-        public int Id_Team { get; set; }
+        public int Id_Event { get; set; }
+        [Key]
         [Required]
-        public int Age { get; set; }
-        public virtual Team_to_Event Teams_To_Events { get; set; }
-
+        public int Id_Category { get; set; }
     }
 }

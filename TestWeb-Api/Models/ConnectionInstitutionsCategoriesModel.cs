@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TestWeb_Api.Models
 {
-    public class Criterions_Gender
+    public class ConnectionInstitutionsCategoriesModel
     {
         [Key]
         [Required]
-        public int Id_Team { get; set; }
+        public int Id_Institution { get; set; }
+        [Key]
         [Required]
-        public string Gender { get; set; }
-        public virtual Team_to_Event Teams_To_Events { get; set; }
+        public int Id_Category { get; set; }
     }
 }
