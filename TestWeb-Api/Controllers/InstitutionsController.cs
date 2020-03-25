@@ -83,12 +83,13 @@ namespace TestWeb_Api.Controllers
             {
                 var institutions = context.Institutions.ToList();
                 List<RankedInstitutionsModel> ranked_institutions = new List<RankedInstitutionsModel>();
+                
                 foreach (var u in institutions)
                 {
                     List<int> marks_institution = context.Marks_Institutions.Where(x => x.Id_Institution == u.Id_Institution).Select(q => q.Mark).ToList();
                     var count = 0;
                     int sum = 0;
-                    decimal avg = new decimal();
+                    double avg = new double();
                     foreach (int t in marks_institution)
                     {
                         sum = sum + t;
@@ -100,7 +101,7 @@ namespace TestWeb_Api.Controllers
                     }
                     else
                     {
-                        avg = sum / count;
+                        avg = (double) sum / count;
                     }
                     
                     RankedInstitutionsModel model = new RankedInstitutionsModel
@@ -174,7 +175,14 @@ namespace TestWeb_Api.Controllers
                     var inst = ranked_list.First(x => x.Id_Institution == q);
                     newmodel.Add(inst);
                 }
-                return newmodel;
+                var newmodel_ordered = from u in newmodel orderby u.Mark select u;
+                List<RankedInstitutionsModel> newlist = new List<RankedInstitutionsModel>();
+                foreach(var q in newmodel_ordered)
+                {
+                    newlist.Add(q);
+                }
+                newlist.Reverse();
+                return newlist;
             }
         }
     }

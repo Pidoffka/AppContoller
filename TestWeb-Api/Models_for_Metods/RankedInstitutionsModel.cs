@@ -14,7 +14,7 @@ namespace TestWeb_Api.Models_for_Metods
         public string? Image_Institution { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
-        public decimal Mark { get; set; }
+        public double Mark { get; set; }
         public int Count_Marks { get; set; }
     }
 }
