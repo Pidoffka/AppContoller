@@ -149,5 +149,33 @@ namespace TestWeb_Api.Controllers
                 return true;
             }
         }
+        [HttpPost("showinstitutionwithcategory")]
+        public List<RankedInstitutionsModel> ShowInstitutionWithCategory([FromBody] ShowInstWithCategoryModel model)
+        {
+            using(var context = new AppContext())
+            {
+                var all_inst = context.Connection_Institutions_Categories.Select(x => x.Id_Institution).ToList();
+                var id_inst = all_inst.Distinct();
+                foreach (var k in model.Categories)
+                {
+                    var id_with_model = context.Connection_Institutions_Categories.Where(x => x.Id_Category == k.Id_Category).Select(x => x.Id_Institution).ToList();
+                    foreach(var t in id_inst)
+                    {
+                        if (!id_with_model.Contains(t))
+                        {
+                            id_inst = id_inst.Where(x => x != t);
+                        }
+                    }
+                }
+                var ranked_list = ShowRankedInstitutions();
+                List<RankedInstitutionsModel> newmodel = new List<RankedInstitutionsModel>();
+                foreach(var q in id_inst)
+                {
+                    var inst = ranked_list.First(x => x.Id_Institution == q);
+                    newmodel.Add(inst);
+                }
+                return newmodel;
+            }
+        }
     }
 }
