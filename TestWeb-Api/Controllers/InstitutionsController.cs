@@ -185,5 +185,83 @@ namespace TestWeb_Api.Controllers
                 return newlist;
             }
         }
+        [HttpPost("showinstitutionwithstringsearching")]
+        public List<SearchingInstitutionModel> ShowInstitutionWithStringSearching([FromBody]ShowInstWithStringSearchingModel model)
+        {
+            using(var context = new AppContext())
+            {
+                var ranked_list = ShowRankedInstitutions();
+                List<ForStringSearching> string_searching = new List<ForStringSearching>();
+                foreach(var q in ranked_list)
+                {
+                    char[] spearator = { ' ' };
+                    var title = q.Title.Split(spearator);
+                    List<string> newlist = new List<string>();
+                    foreach(var m in title)
+                    {
+                        newlist.Add(m);
+                    }
+                    
+                    ForStringSearching string_search = new ForStringSearching
+                    {
+                        Id_Institution = q.Id_Institution,
+                        Titles = newlist,
+                        Count_Coincidences = 0
+                    };
+                    string_searching.Add(string_search);
+                }
+                var t = model.Request.Split(new char[] { ' ' });
+                List<string> request = new List<string>();
+                foreach(var q in t)
+                {
+                    request.Add(q);
+                }
+                request.Distinct();
+                int count_request = request.Count();
+                foreach(var q in string_searching)
+                {
+                    int count = 0;
+                    foreach(var e in request)
+                    {
+                        if (q.Titles.Contains(e))
+                        {
+                            count = count + 1;
+                        }
+                    }
+                    q.Count_Coincidences = count;
+                    
+                }
+                List<SearchingInstitutionModel> search_model = new List<SearchingInstitutionModel>();
+                foreach(var q in string_searching)
+                {
+                    if ((double)q.Count_Coincidences / count_request >= 0.5)
+                    {
+                        var index = ranked_list.FindIndex(x => x.Id_Institution == q.Id_Institution);
+                        SearchingInstitutionModel newmodel = new SearchingInstitutionModel
+                        {
+                            Id_Institution = ranked_list[index].Id_Institution,
+                            Title = ranked_list[index].Title,
+                            Description = ranked_list[index].Description,
+                            Placement = ranked_list[index].Placement,
+                            Image_Institution = ranked_list[index].Image_Institution,
+                            Phone = ranked_list[index].Phone,
+                            Email = ranked_list[index].Email,
+                            Mark = ranked_list[index].Mark,
+                            Count_Marks = ranked_list[index].Count_Marks,
+                            Count_Request = q.Count_Coincidences
+                        };
+                        search_model.Add(newmodel);
+                    }
+                }
+                var s = from u in search_model orderby u.Count_Request select u;
+                List<SearchingInstitutionModel> search_mod = new List<SearchingInstitutionModel>();
+                foreach(var e in s)
+                {
+                    search_mod.Add(e);
+                }
+                return search_mod;
+
+            }
+        }
     }
 }
