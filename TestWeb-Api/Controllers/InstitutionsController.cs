@@ -263,5 +263,40 @@ namespace TestWeb_Api.Controllers
 
             }
         }
+        [HttpPost("institutionchange")]
+        public bool ChangeInstitution([FromBody] ChangeInstitutionModel model)
+        {
+            using(var context = new AppContext())
+            {
+                var institut = context.Institutions.First(x => x.Id_Institution == model.id);
+                if(model.image != "")
+                {
+                    institut.Image_Institution = model.image;
+                }
+                if(model.phone != "")
+                {
+                    institut.Phone = model.phone;
+                }
+                if(model.placement != "")
+                {
+                    institut.Placement = model.placement;
+                }
+                if(model.title != "")
+                {
+                    institut.Title = model.title;
+                }
+                if(model.description != "")
+                {
+                    institut.Description = model.description;
+                }
+                if(model.email != "")
+                {
+                    institut.Email = model.email;
+                }
+                context.SaveChanges();
+                return true;
+            }
+        }
+
     }
 }

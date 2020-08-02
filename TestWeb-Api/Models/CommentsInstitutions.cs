@@ -4,17 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace TestWeb_Api.Models
 {
-    public class CategoriesModel
+    public class CommentsInstitutions
     {
         [Key]
         [Required]
-        public int Id_Category { get; set; }
+        public int Id_user { get; set; }
+        [Key]
         [Required]
-        public string Name_Category { get; set; }
-        public string Image { get; set; }
+        public int id_institution { get; set; }
 
     }
 }
