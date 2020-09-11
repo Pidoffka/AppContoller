@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using TestWeb_Api.Models;
 
 
 namespace TestWeb_Api.Controllers
@@ -35,6 +34,7 @@ namespace TestWeb_Api.Controllers
         [HttpPost("add_user")]
         public string AddUser([FromBody] AuthModel authModel)   
         {
+
             if (CheckUser(authModel.Phone_Number))
             {
                 return "null";

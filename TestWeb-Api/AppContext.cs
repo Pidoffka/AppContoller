@@ -15,7 +15,7 @@ namespace TestWeb_Api
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=wpl24.hosting.reg.ru;Database=u0933163_dan1a;User ID=u0933163_dan1a;Password=EfWe4QD7djDuRqh"); // connection string to your DB
+            optionsBuilder.UseSqlServer(@"Server=wpl24.hosting.reg.ru;Database=u0933163_GOGOAPPPROJECT;User ID=u0933163_dane4ka;Password=HmPxxHSvj38jNqP"); // connection string to your DB
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +24,7 @@ namespace TestWeb_Api
             modelBuilder.Entity<ConnectionEventsCategoriesModel>().HasKey(u => new { u.Id_Event, u.Id_Category });
             modelBuilder.Entity<ConnectionInstitutionsCategoriesModel>().HasKey(u => new { u.Id_Institution, u.Id_Category });
             modelBuilder.Entity<MarksInstitutionsModel>().HasKey(u => new { u.Id_User, u.Id_Institution});
+            modelBuilder.Entity<User>().HasKey(u => new { u.Id_User });
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Friend> Friends { get; set; }
