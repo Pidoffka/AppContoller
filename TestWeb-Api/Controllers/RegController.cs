@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -102,7 +103,7 @@ namespace TestWeb_Api.Controllers
         {
             using(var appContext = new AppContext())
             {
-                var user = appContext.Users.Where(x => x.JsonToken == jwt.Token).ToList();
+                var user = appContext.Users.Where(x => x.jsonToken == jwt.jsonToken).ToList();
                 if(user.Count() == 0)
                 {
                     return null;
