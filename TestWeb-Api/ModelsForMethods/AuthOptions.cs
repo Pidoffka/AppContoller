@@ -9,7 +9,7 @@ namespace TestWeb_Api.ModelsForMethods
 {
     public class AuthOptions
     {
-        public const string ISSUER = "MyAuthServer"; // издатель токена
+        public const string ISSUER = "GoGoAppProject"; // издатель токена
         const string KEY = "GoGoVoDaThisTokenCrazyUKnow?";   // ключ для шифрации
         public const int LIFETIME = 10; // время жизни токена - 1 минута
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
