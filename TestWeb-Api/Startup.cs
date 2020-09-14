@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using Newtonsoft.Json;
-using TestWeb_Api.Hubs;
+//using TestWeb_Api.Hubs;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNet.SignalR;
 
@@ -57,22 +57,22 @@ namespace TestWeb_Api
                         options.RequireHttpsMetadata = false;
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            // укзывает, будет ли валидироваться издатель при валидации токена
-                            ValidateIssuer = true,
-                            // строка, представляющая издателя
-                            ValidIssuer = AuthOptions.ISSUER,
+                            //// укзывает, будет ли валидироваться издатель при валидации токена
+                            //ValidateIssuer = true,
+                            //// строка, представляющая издателя
+                            //ValidIssuer = AuthOptions.ISSUER,
 
-                            // будет ли валидироваться потребитель токена
-                            ValidateAudience = true,
-                            // установка потребителя токена
-                            ValidAudience = AuthOptions.AUDIENCE,
-                            // будет ли валидироваться время существования
-                            ValidateLifetime = true,
+                            //// будет ли валидироваться потребитель токена
+                            //ValidateAudience = true,
+                            //// установка потребителя токена
+                            //ValidAudience = AuthOptions.AUDIENCE,
+                            //// будет ли валидироваться время существования
+                            //ValidateLifetime = true,
 
-                            // установка ключа безопасности
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                            // валидация ключа безопасности
-                            ValidateIssuerSigningKey = true,
+                            //// установка ключа безопасности
+                            //IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            //// валидация ключа безопасности
+                            //ValidateIssuerSigningKey = true,
                         };
                     });
             services.AddSignalR();
@@ -107,14 +107,14 @@ namespace TestWeb_Api
             });
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<SynchronizationHub>("/Synchronization",
-                    options =>
-                    {
-                        options.ApplicationMaxBufferSize = 64;
-                        options.TransportMaxBufferSize = 64;
-                        options.LongPolling.PollTimeout = System.TimeSpan.FromMinutes(1);
-                        options.Transports = HttpTransportType.LongPolling | HttpTransportType.WebSockets;
-                    });
+                //endpoints.MapHub<SynchronizationHub>("/Synchronization",
+                //    options =>
+                //    {
+                //        options.ApplicationMaxBufferSize = 64;
+                //        options.TransportMaxBufferSize = 64;
+                //        options.LongPolling.PollTimeout = System.TimeSpan.FromMinutes(1);
+                //        options.Transports = HttpTransportType.LongPolling | HttpTransportType.WebSockets;
+                //    });
             });
 
 

@@ -20,20 +20,42 @@ namespace TestWeb_Api
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Friend>().HasKey(u => new { u.Id_User_Sender, u.Id_User_Receiver });
-            modelBuilder.Entity<ConnectionEventsCategoriesModel>().HasKey(u => new { u.Id_Event, u.Id_Category });
-            modelBuilder.Entity<ConnectionInstitutionsCategoriesModel>().HasKey(u => new { u.Id_Institution, u.Id_Category });
-            modelBuilder.Entity<MarksInstitutionsModel>().HasKey(u => new { u.Id_User, u.Id_Institution});
-            modelBuilder.Entity<User>().HasKey(u => new { u.Id_User });
+            modelBuilder.Entity<BadCategoryBuilding>().HasKey(u => new { u.badCategoryId, u.buildingId });
+            modelBuilder.Entity<CompositionCategory>().HasKey(u => new { u.badCategoryId, u.newCategoryId });
+            modelBuilder.Entity<EventBuilding>().HasKey(u => new { u.buildingId, u.phoneNumberCreator, u.dateCreated });
+            modelBuilder.Entity<Event>().HasKey(u => new { u.phoneNumberCreator, u.dateCreated});
+            modelBuilder.Entity<EventInfo>().HasKey(u => new { u.phoneNumberCreator, u.dateCreated });
+            modelBuilder.Entity<MessageModel>().HasKey(u => new { u.phoneNumberSender, u.phoneNumberReceiver });
+            modelBuilder.Entity<MessageInfoModel>().HasKey(u => new { u.phoneNumberSender, u.phoneNumberReceiver});
+            modelBuilder.Entity<ReviewModel>().HasKey(u => new { u.buildingId, u.phoneNumber});
+            modelBuilder.Entity<UndergroundBuildingModel>().HasKey(u => new { u.buildingId, u.name});
+            modelBuilder.Entity<NewCategoryBuilding>().HasKey(u => new { u.buildingId, u.newCategoryId});
+            modelBuilder.Entity<UserRatingModel>().HasKey(u => new { u.buildingId, u.phoneNumber});
+            modelBuilder.Entity<UserReviewModel>().HasKey(u => new { u.phoneNumberSender, u.phoneNumberReceiver});
+            modelBuilder.Entity<UserToUserModel>().HasKey(u => new { u.phoneNumberSender, u.phoneNumberReceiver});
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Friend> Friends { get; set; }
+        public DbSet<BadCategory> BadCategories { get; set; }
+        public DbSet<BadCategoryBuilding> BadCategoriesBuildings { get; set; }
+        public DbSet<BuildingImage> BuildingImages { get; set; }
+        public DbSet<BuildingInfoModel> BuildingInfo { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<BuildingType> BuildingTypes { get; set; }
+        public DbSet<CompositionCategory> CompositionCategories { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventBuilding> EventsBuilding { get; set; }
+        public DbSet<EventInfo> EventsInfo { get; set; }
         public DbSet<MessageModel> Message { get; set; }
-        public DbSet<EventsModel> Events { get; set; }
-        public DbSet<InstitutionsModel> Institutions { get; set; }
-        public DbSet<CategoriesModel> Categories { get; set; }
-        public DbSet<ConnectionEventsCategoriesModel> Connection_Events_Categories { get; set; }
-        public DbSet<ConnectionInstitutionsCategoriesModel> Connection_Institutions_Categories { get; set; }
-        public DbSet<MarksInstitutionsModel> Marks_Institutions { get; set; }
+        public DbSet<MessageInfoModel> MessageInfo { get; set; }
+        public DbSet<NewCategory> NewCategories { get; set; }
+        public DbSet<NewCategoryBuilding> NewCategoriesBuildings { get; set; }
+        public DbSet<NewCategoryInfo> NewCategoriesInfo { get; set; }
+        public DbSet<ReviewModel> Review { get; set; }
+        public DbSet<Underground> Undergrounds { get; set; }
+        public DbSet<UndergroundBuildingModel> UndergroundBuilding { get; set; }
+        public DbSet<UserInfoModel> UserInfo { get; set; }
+        public DbSet<UserRatingModel> UserRating { get; set; }
+        public DbSet<UserReviewModel> UserReview { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserToUserModel> UserToUser { get; set; }
     } 
 }

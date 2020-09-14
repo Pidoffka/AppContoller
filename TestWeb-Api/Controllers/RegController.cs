@@ -12,7 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-
+using TestWeb_Api.Models;
+using TestWeb_Api.ModelsForMethods;
 
 namespace TestWeb_Api.Controllers
 {
@@ -28,49 +29,70 @@ namespace TestWeb_Api.Controllers
         {
             using (var context = new AppContext())
             {
-                return context.Users.Any(x => x.Phone_Number == phoneNumber);
+                return context.Users.Any(x => x.phoneNumber == phoneNumber);
             }
         }
         [HttpPost("add_user")]
-        public string AddUser([FromBody] AuthModel authModel)   
+        public string AddUser([FromBody] AddUserModel authModel)   
         {
 
-            if (CheckUser(authModel.Phone_Number))
+            if (CheckUser(authModel.phoneNumber))
             {
                 return "null";
             }
+            DateTime timeNow = DateTime.Now;
+            string cultureInfo = "ru-RU";
+            var culture = new CultureInfo(cultureInfo);
             User user = new User()
             {
-                Name = authModel.Name,
-                Surname = authModel.Surname,
-                Date_of_Birthday = authModel.Date_of_Birthday,
-                Gender = authModel.Gender,
-                Phone_Number = authModel.Phone_Number,
-                Password = authModel.Password,
-                Avatar = authModel.Avatar,
-                JsonToken = AddJwt(authModel.Phone_Number)
+                phoneNumber = authModel.phoneNumber,
+                dateSource = timeNow.ToString(culture)
             };
-            using (var context = new AppContext())
+            UserInfoModel info = new UserInfoModel()
             {
-                context.Users.Add(user);        
-                context.SaveChanges();
-                return JsonConvert.SerializeObject(user);
+                phoneNumber = user.phoneNumber,
+                name = authModel.name,
+                surname = authModel.surname,
+                gender = authModel.gender,
+                password = authModel.password,
+                city = authModel.city,
+                birthday = authModel.birthday,
+                avatar = authModel.avatar
+            };
+            try
+            {
+                using (var context = new AppContext())
+                {
+                    context.Users.Add(user);
+                    context.UserInfo.Add(info);
+                    context.SaveChanges();
+                    return JsonConvert.SerializeObject(user);
+                }
+            }
+            catch
+            {
+                return "Ошибка подключения";
             }
         }
 
         [HttpPost("check_signin")]
-        public string Check_Login([FromBody] CheckModel authModel)
+        public string Check_Login([FromBody] AutorizationModel authModel)
         {
             using (var context = new AppContext())
             {
-                var user = context.Users.Where(x => x.Phone_Number == authModel.Phone_Number & x.Password == authModel.Password).ToList();
-                if(user.Count() == 0)
+                var user = context.Users.First(x => x.phoneNumber == authModel.phoneNumber);
+                if(user.phoneNumber == null)
                 {
-                    return "null";
+                    return "Неверный номер телефона";
+                }
+                var user_inf = context.UserInfo.First(x => x.phoneNumber == user.phoneNumber);
+                if(user_inf.password != authModel.password)
+                {
+                    return "Неверный пароль";
                 }
                 else
                 {
-                    string jsonStr = JsonConvert.SerializeObject(user[0]);
+                    string jsonStr = JsonConvert.SerializeObject(user_inf);
                     return jsonStr;
                 }
             }
