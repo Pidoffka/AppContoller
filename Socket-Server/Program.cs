@@ -10,7 +10,7 @@ namespace Socket_Server
         public static void Main(string[] args)
         {
             // Устанавливаем для сокета локальную конечную точку
-            IPHostEntry ipHost = Dns.GetHostEntry("31.31.196.199");
+            IPHostEntry ipHost = Dns.GetHostEntry("127.0.0.1");
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 80);
 

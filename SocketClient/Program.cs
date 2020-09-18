@@ -30,7 +30,7 @@ namespace SocketClient
             // Соединяемся с удаленным устройством
             // 31.31.196.199
             // Устанавливаем удаленную точку для сокета
-            IPHostEntry ipHost = Dns.GetHostEntry("31.31.196.199");
+            IPHostEntry ipHost = Dns.GetHostEntry("127.0.0.1");
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
 
