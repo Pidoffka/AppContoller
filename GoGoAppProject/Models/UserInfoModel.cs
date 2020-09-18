@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestWeb_Api.Models
+namespace GoGoAppProject.Models
 {
     public class UserInfoModel
     {
@@ -27,5 +27,7 @@ namespace TestWeb_Api.Models
         public string avatar { get; set; }
         [Required]
         public string json { get; set; }
+        [Required]
+        public string nickname { get; set; }
     }
 }

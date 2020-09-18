@@ -6,6 +6,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using GoGoAppProject.Models;
+using GoGoAppProject.ModelsForMethods;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using TestWeb_Api.Models;
-using TestWeb_Api.ModelsForMethods;
+using EntityFrameworkCoreMock;
+using Moq;
 
-namespace TestWeb_Api.Controllers
+namespace GoGoAppProject.Controllers
 {
     [Route("Reg")]
     public class RegController : Controller
@@ -41,40 +43,51 @@ namespace TestWeb_Api.Controllers
             {
                 return "null";
             }
-            DateTime timeNow = DateTime.Now;
-            string cultureInfo = "ru-RU";
-            var culture = new CultureInfo(cultureInfo);
-            User user = new User()
+            else
             {
-                phoneNumber = authModel.phoneNumber,
-                dateSource = timeNow.ToString(culture)
-            };
-            UserInfoModel info = new UserInfoModel()
-            {
-                phoneNumber = user.phoneNumber,
-                name = authModel.name,
-                surname = authModel.surname,
-                gender = authModel.gender,
-                password = authModel.password,
-                city = authModel.city,
-                birthday = authModel.birthday,
-                avatar = authModel.avatar,
-                json = AddJwt(user.phoneNumber)
-            };
-            //try
-            //{
-                using (var context = new AppContext())
+                DateTime timeNow = DateTime.Now;
+                string cultureInfo = "ru-RU";
+                var culture = new CultureInfo(cultureInfo);
+                User user = new User()
                 {
-                    context.Users.Add(user);
-                    context.UserInfo.Add(info);
-                    context.SaveChanges();
-                    return JsonConvert.SerializeObject(user);
+                    phoneNumber = authModel.phoneNumber,
+                    dateSource = timeNow.ToString(culture)
+                };
+                UserInfoModel info = new UserInfoModel()
+                {
+                    phoneNumber = user.phoneNumber,
+                    name = authModel.name,
+                    surname = authModel.surname,
+                    gender = authModel.gender,
+                    password = authModel.password,
+                    city = authModel.city,
+                    birthday = authModel.birthday,
+                    avatar = authModel.avatar,
+                    nickname = authModel.nickname,
+                    json = AddJwt(user.phoneNumber)
+                };
+                try
+                {
+                    using (var context = new AppContext())
+                    {
+                        var contextMock = new DbContextMock<AppContext>();
+                        var dbSetMockUsers = contextMock.CreateDbSetMock(x => x.Users);
+                        dbSetMockUsers.Verify(x => x.Add(user), Times.Once);
+                        context.Users.Add(user);
+                        var dbSetMockUserInfo = contextMock.CreateDbSetMock(x => x.UserInfo);
+                        dbSetMockUserInfo.Verify(x => x.Add(info));
+                        context.UserInfo.Add(info);
+                        context.UserInfo.Add(info);
+                        context.SaveChanges();
+                        return JsonConvert.SerializeObject(user);
+                    }
                 }
-            //}
-            //catch
-            //{
-            //    return "Ошибка подключения";
-            //}
+                catch
+                {
+                    return "Ошибка подключения";
+                }
+            }
+
         }
 
         [HttpPost("check_signin")]
@@ -82,12 +95,12 @@ namespace TestWeb_Api.Controllers
         {
             using (var context = new AppContext())
             {
-                var user = context.Users.First(x => x.phoneNumber == authModel.phoneNumber);
-                if(user.phoneNumber == null)
+                var user = context.Users.Where(x => x.phoneNumber == authModel.phoneNumber).ToList();
+                if(user.Count == 0)
                 {
                     return "Неверный номер телефона";
                 }
-                var user_inf = context.UserInfo.First(x => x.phoneNumber == user.phoneNumber);
+                var user_inf = context.UserInfo.First(x => x.phoneNumber == user[0].phoneNumber);
                 if(user_inf.password != authModel.password)
                 {
                     return "Неверный пароль";
