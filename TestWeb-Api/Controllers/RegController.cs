@@ -98,23 +98,23 @@ namespace TestWeb_Api.Controllers
                 }
             }
         }
-        [HttpPost("checkJwt")]
-        public string CheckJwt([FromBody]JWT jwt)
-        {
-            using(var appContext = new AppContext())
-            {
-                var user = appContext.Users.Where(x => x.jsonToken == jwt.jsonToken).ToList();
-                if(user.Count() == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    string jsonStr = JsonConvert.SerializeObject(user[0]);
-                    return jsonStr;
-                }
-            }
-        }
+        //[HttpPost("checkJwt")]
+        //public string CheckJwt([FromBody]JWT jwt)
+        //{
+        //    using(var appContext = new AppContext())
+        //    {
+        //        var user = appContext.Users.Where(x => x.jsonToken == jwt.jsonToken).ToList();
+        //        if(user.Count() == 0)
+        //        {
+        //            return null;
+        //        }
+        //        else
+        //        {
+        //            string jsonStr = JsonConvert.SerializeObject(user[0]);
+        //            return jsonStr;
+        //        }
+        //    }
+        //}
         private string AddJwt(string phoneNumber)
         {
             var now = DateTime.UtcNow;
