@@ -4,28 +4,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestWeb_Api.Models
+namespace GoGoAppProject.ModelsForMethods
 {
-    public class UserInfoModel
+    [Serializable]
+    public class AddUserModel
     {
-        [Key]
-        [Required]
         public string phoneNumber { get; set; }
-        [Required]
         public string name { get; set; }
-        [Required]
         public string surname { get; set; }
-        [Required]
         public int gender { get; set; }
-        [Required]
-        public string password { get; set; }
-        [Required]
         public string city { get; set; }
-        [Required]
-        public string birthday { get; set; }
-        [Required]
+        public string password { get; set; }
         public string avatar { get; set; }
-        [Required]
-        public string json { get; set; }
+        public string birthday { get; set; }
+        public string nickname { get; set; }
     }
 }
