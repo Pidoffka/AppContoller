@@ -22,22 +22,13 @@ using Microsoft.AspNet.SignalR;
 
 using Owin;
 using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestWeb_Api
 {
     public class Startup
     {
-        private void Serialize<T>(string fileName, T data)
-        {
-            using (var sw = new StreamWriter(fileName))
-            {
-                using (var jsonWriter = new JsonTextWriter(sw))
-                {
-                    var serializer = new JsonSerializer();
-                    serializer.Serialize(jsonWriter, data);
-                }
-            }
-        }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -51,32 +42,6 @@ namespace TestWeb_Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
-                    {
-                        options.RequireHttpsMetadata = false;
-                        options.TokenValidationParameters = new TokenValidationParameters
-                        {
-                            //// укзывает, будет ли валидироваться издатель при валидации токена
-                            //ValidateIssuer = true,
-                            //// строка, представляющая издателя
-                            //ValidIssuer = AuthOptions.ISSUER,
-
-                            //// будет ли валидироваться потребитель токена
-                            //ValidateAudience = true,
-                            //// установка потребителя токена
-                            //ValidAudience = AuthOptions.AUDIENCE,
-                            //// будет ли валидироваться время существования
-                            //ValidateLifetime = true,
-
-                            //// установка ключа безопасности
-                            //IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                            //// валидация ключа безопасности
-                            //ValidateIssuerSigningKey = true,
-                        };
-                    });
-            services.AddSignalR();
-            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,36 +53,19 @@ namespace TestWeb_Api
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync("Hello World!");
+                });
             });
-            app.UseEndpoints(endpoints =>
-            {
-                //endpoints.MapHub<SynchronizationHub>("/Synchronization",
-                //    options =>
-                //    {
-                //        options.ApplicationMaxBufferSize = 64;
-                //        options.TransportMaxBufferSize = 64;
-                //        options.LongPolling.PollTimeout = System.TimeSpan.FromMinutes(1);
-                //        options.Transports = HttpTransportType.LongPolling | HttpTransportType.WebSockets;
-                //    });
-            });
-
-
         }
     }
 }
