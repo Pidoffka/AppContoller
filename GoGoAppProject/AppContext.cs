@@ -15,7 +15,7 @@ namespace GoGoAppProject
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(local)\SQLEXPRESS;Database=CheckDatabase; Trusted_Connection = True"); // connection string to your DB
+            optionsBuilder.UseSqlServer(@"Server=(local)\SQLEXPRESS;Database=GoGoAppProject; Trusted_Connection = True"); // connection string to your DB
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
