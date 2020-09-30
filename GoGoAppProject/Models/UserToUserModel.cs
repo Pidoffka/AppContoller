@@ -16,5 +16,7 @@ namespace GoGoAppProject.Models
         public string phoneNumberReceiver { get; set; }
         [Required]
         public string dateSource { get; set; }
+        [Required]
+        public bool active { get; set; }
     }
 }

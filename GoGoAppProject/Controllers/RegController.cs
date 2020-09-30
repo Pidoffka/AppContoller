@@ -64,20 +64,21 @@ namespace GoGoAppProject.Controllers
                     birthday = authModel.birthday,
                     avatar = authModel.avatar,
                     nickname = authModel.nickname,
-                    json = AddJwt(user.phoneNumber)
+                    json = AddJwt(user.phoneNumber),
+                };
+                UserReviewPoint point = new UserReviewPoint()
+                {
+                    phoneNumber = user.phoneNumber,
+                    reviewPoints = 1000
                 };
                 try
                 {
                     using (var context = new AppContext())
                     {
                         var contextMock = new DbContextMock<AppContext>();
-                        var dbSetMockUsers = contextMock.CreateDbSetMock(x => x.Users);
-                        dbSetMockUsers.Verify(x => x.Add(user), Times.Once);
                         context.Users.Add(user);
-                        var dbSetMockUserInfo = contextMock.CreateDbSetMock(x => x.UserInfo);
-                        dbSetMockUserInfo.Verify(x => x.Add(info));
                         context.UserInfo.Add(info);
-                        context.UserInfo.Add(info);
+                        context.UserReviewPoints.Add(point);
                         context.SaveChanges();
                         return JsonConvert.SerializeObject(user);
                     }
