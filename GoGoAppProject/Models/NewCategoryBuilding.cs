@@ -11,8 +11,6 @@ namespace GoGoAppProject.Models
         [Key]
         [Required]
         public int newCategoryId { get; set; }
-        [Required]
-        public string dateSource { get; set; }
         [Key]
         [Required]
         public int buildingId { get; set; }

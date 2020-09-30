@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
 
 namespace Socket_Server
 {
@@ -12,11 +13,9 @@ namespace Socket_Server
             // Устанавливаем для сокета локальную конечную точку
             IPHostEntry ipHost = Dns.GetHostEntry("127.0.0.1");
             IPAddress ipAddr = ipHost.AddressList[0];
-            IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 80);
-
-            // Создаем сокет Tcp/Ip
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 5000);
+                // Создаем сокет Tcp/Ip
             Socket sListener = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
             // Назначаем сокет локальной конечной точке и слушаем входящие сокеты
             try
             {
@@ -67,7 +66,11 @@ namespace Socket_Server
             }
             catch (Exception ex)
             {
-                //Console.WriteLine(ex.ToString());
+                using (StreamWriter f = new StreamWriter("test.txt"))
+                {
+                    string str = ex.ToString();
+                    f.Write(str);
+                }
             }
             finally
             {

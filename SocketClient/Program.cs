@@ -11,7 +11,7 @@ namespace SocketClient
         {
             try
             {
-                SendMessageFromSocket(80);
+                SendMessageFromSocket(5000);
             }
             catch (Exception ex)
             {
@@ -28,9 +28,9 @@ namespace SocketClient
             byte[] bytes = new byte[1024];
 
             // Соединяемся с удаленным устройством
-            // 31.31.196.199
+            // 31.31.196.199 185.20.226.150
             // Устанавливаем удаленную точку для сокета
-            IPHostEntry ipHost = Dns.GetHostEntry("127.0.0.1");
+            IPHostEntry ipHost = Dns.GetHostEntry("2A00:F940:1:1:2:0:0:913");
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, port);
 

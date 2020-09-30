@@ -15,7 +15,7 @@ namespace GoGoAppProject
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=wpl24.hosting.reg.ru;Database=u0933163_GOGOAPPPROJECT;User ID=u0933163_dane4ka;Password=HmPxxHSvj38jNqP"); // connection string to your DB
+            optionsBuilder.UseSqlServer(@"Server=(local)\SQLEXPRESS;Database=$DatabaseName$; Trusted_Connection = True"); // connection string to your DB
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
