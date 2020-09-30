@@ -15,7 +15,7 @@ namespace GoGoAppProject
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=wpl24.hosting.reg.ru;Database=u0933163_GOGOAPPPROJECT;User ID=u0933163_dane4ka;Password=HmPxxHSvj38jNqP"); // connection string to your DB
+            optionsBuilder.UseSqlServer(@"Server=(local)\SQLEXPRESS;Database=CheckDatabase; Trusted_Connection = True"); // connection string to your DB
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace GoGoAppProject
             modelBuilder.Entity<User>().HasKey(u => new { u.phoneNumber });
             modelBuilder.Entity<FavoritePlace>().HasKey(u => new { u.phoneNumber, u.buildingId});
             modelBuilder.Entity<UserInEvent>().HasKey(u => new { u.dateCreated, u.phoneNumber, u.phoneNumberCreator});
-
+            modelBuilder.Entity<UserReviewPoint>().HasKey(u => new { u.phoneNumber});
 
 
 
@@ -77,5 +77,6 @@ namespace GoGoAppProject
         public DbSet<UserToUserModel> UserToUser { get; set; }
         public DbSet<FavoritePlace> FavoritePlaces { get; set; }
         public DbSet<UserInEvent> UsersInEvents { get; set; }
+        public DbSet<UserReviewPoint> UserReviewPoints { get; set; }
     } 
 }

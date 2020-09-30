@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace GoGoAppProject.Models
 {
-    public class NewCategoryBuilding
+    public class UserReviewPoint
     {
         [Key]
         [Required]
-        public int newCategoryId { get; set; }
-        [Key]
+        public string phoneNumber { get; set; }
         [Required]
-        public int buildingId { get; set; }
+        public double reviewPoints { get; set; }
     }
 }
