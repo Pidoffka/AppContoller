@@ -15,4 +15,8 @@
     <PackageReference Include="Owin" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SaredModels\SharedModels.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Socket-Server", "Socket-Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketClient", "SocketClient\SocketClient.csproj", "{D2AEEF27-7606-4FD0-9165-E9495FD14AF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoGoAppProject", "GoGoAppProject\GoGoAppProject.csproj", "{8A65BB1B-F80E-439C-BC60-CA9E70678364}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoGoAppProject", "GoGoAppProject\GoGoAppProject.csproj", "{8A65BB1B-F80E-439C-BC60-CA9E70678364}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SaredModels\SharedModels.csproj", "{2DA3C286-C994-4EEE-9223-521B7AA3FFC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8A65BB1B-F80E-439C-BC60-CA9E70678364}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A65BB1B-F80E-439C-BC60-CA9E70678364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A65BB1B-F80E-439C-BC60-CA9E70678364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DA3C286-C994-4EEE-9223-521B7AA3FFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DA3C286-C994-4EEE-9223-521B7AA3FFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DA3C286-C994-4EEE-9223-521B7AA3FFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DA3C286-C994-4EEE-9223-521B7AA3FFC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
