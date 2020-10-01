@@ -20,12 +20,8 @@ namespace TestWeb_Api.Controllers
 {
     [Route("Reg")]
     public class RegController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View("MainPage");
-        }
-        
+    {   
+        [HttpPost("check-user")]
         public bool CheckUser([FromBody]string phoneNumber)
         {
             using (var context = new AppContext())

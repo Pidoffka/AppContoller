@@ -1,6 +1,6 @@
 using System;
 
-namespace SocketClient.Models
+namespace SharedModels
 {
     public class ErrorViewModel
     {
